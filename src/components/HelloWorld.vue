@@ -11,12 +11,13 @@
     <button class="btn btn-primary" @click="rollAllDices">
       Roll all dices
     </button>
+    <button @click="sortPlayers">sort</button>
     <ol>
-      <li v-for="todo in todos" :key="todo.id">
-        <h3>Playername: {{ todo.playername }}</h3>
-        <h3>Initiative Modifier: {{ todo.modifier }}</h3>
-        <h3 v-if="todo.diceVal > 0">Initiative: {{ todo.diceVal }}</h3>
-        <button @click="diceGenerator(todo.modifier, todo.id)">
+      <li v-for="data in players" :key="data.id">
+        <h3>Playername: {{ data.playername }}</h3>
+        <h3>Initiative Modifier: {{ data.modifier }}</h3>
+        <h3 v-if="data.diceVal > 0">Initiative: {{ data.diceVal }}</h3>
+        <button @click="diceGenerator(data.modifier, data.id)">
           Roll the Dice
         </button>
       </li>
@@ -32,9 +33,9 @@ export default {
     const playerName = ref("");
     const iniModifier = ref("");
     const playerId = ref("1");
-    const todos = ref([]);
+    const players = ref([]);
     function addNewPlayer() {
-      todos.value.push({
+      players.value.push({
         id: playerId.value++,
         playername: playerName.value,
         modifier: iniModifier.value,
@@ -43,30 +44,34 @@ export default {
       playerName.value = "";
       iniModifier.value = "";
     }
+    function sortPlayers() {
+      players.value.sort((a, b) => b.diceVal - a.diceVal);
+    }
     function diceGenerator(modifier, id) {
       var result = Math.floor(Math.random() * 20) + 1;
       console.log(result + parseInt(modifier));
-      todos.value.filter((resp) => {
+      players.value.filter((resp) => {
         if (resp.id === id) {
           resp.diceVal = result + parseInt(modifier);
         }
       });
+      // console.log(todos.value.sort((a, b) => a - b));
     }
     function rollAllDices() {
       var result = 0;
-      for (let i = 0; i < todos.value.length; i++) {
+      for (let i = 0; i < players.value.length; i++) {
         result = Math.floor(Math.random() * 20) + 1;
-        console.log(result);
-        todos.value[i].diceVal = result + parseInt(todos.value[i].modifier);
+        players.value[i].diceVal = result + parseInt(players.value[i].modifier);
       }
     }
     return {
-      todos,
+      players,
       playerName,
       iniModifier,
       addNewPlayer,
       diceGenerator,
       rollAllDices,
+      sortPlayers,
     };
   },
 };
