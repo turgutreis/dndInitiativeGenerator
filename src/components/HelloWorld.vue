@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Vue 3 Initiative Generator D&D 5</h1>
+    <h3>Vue 3 Initiative Generator D&D 5</h3>
     <form @submit.prevent="addNewPlayer">
       <label>Name</label>
       <input v-model="playerName" name="playerName" />
@@ -20,6 +20,7 @@
         <button @click="diceGenerator(data.modifier, data.id)">
           Roll the Dice
         </button>
+        <button @click="removePlayer(data.id)">Delete Player</button>
       </li>
     </ol>
   </div>
@@ -64,6 +65,10 @@ export default {
         players.value[i].diceVal = result + parseInt(players.value[i].modifier);
       }
     }
+    function removePlayer(val) {
+      const index = players.value.map((item) => item.id).indexOf(val);
+      players.value.splice(index, 1);
+    }
     return {
       players,
       playerName,
@@ -72,6 +77,7 @@ export default {
       diceGenerator,
       rollAllDices,
       sortPlayers,
+      removePlayer,
     };
   },
 };
