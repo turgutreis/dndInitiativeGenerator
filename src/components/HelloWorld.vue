@@ -7,7 +7,7 @@
         <input v-model="playerName" name="playerName" />
         <label>Ini Modifer</label>
         <input v-model="iniModifier" name="iniModifier" />
-        <button>Add New Player</button>
+        <button class="btn success">Add New Player</button>
       </form>
       <button class="btn success" @click="rollAllDices">Roll all dices</button>
       <button class="btn danger" @click="sortPlayers">SORT</button>
