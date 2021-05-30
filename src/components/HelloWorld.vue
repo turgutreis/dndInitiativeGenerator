@@ -1,27 +1,34 @@
 <template>
   <div>
-    <h3>Vue 3 Initiative Generator D&D 5</h3>
-    <form @submit.prevent="addNewPlayer">
-      <label>Name</label>
-      <input v-model="playerName" name="playerName" />
-      <label>Ini Modifer</label>
-      <input v-model="iniModifier" name="iniModifier" />
-      <button>Add New Player</button>
-    </form>
-    <button class="btn btn-primary" @click="rollAllDices">
-      Roll all dices
-    </button>
-    <button @click="sortPlayers">sort</button>
+    <div class="card-form">
+      <h3>Vue 3 Initiative Generator D&D 5</h3>
+      <form @submit.prevent="addNewPlayer">
+        <label>Name</label>
+        <input v-model="playerName" name="playerName" />
+        <label>Ini Modifer</label>
+        <input v-model="iniModifier" name="iniModifier" />
+        <button>Add New Player</button>
+      </form>
+      <button class="btn success" @click="rollAllDices">Roll all dices</button>
+      <button class="btn danger" @click="sortPlayers">SORT</button>
+    </div>
     <ol>
-      <li v-for="data in players" :key="data.id">
-        <h3>Playername: {{ data.playername }}</h3>
-        <h3>Initiative Modifier: {{ data.modifier }}</h3>
-        <h3 v-if="data.diceVal > 0">Initiative: {{ data.diceVal }}</h3>
-        <button @click="diceGenerator(data.modifier, data.id)">
-          Roll the Dice
-        </button>
-        <button @click="removePlayer(data.id)">Delete Player</button>
-      </li>
+      <div class="card" v-for="data in players" :key="data.id">
+        <li>
+          <h3>Playername: {{ data.playername }}</h3>
+          <h3>Initiative Modifier: {{ data.modifier }}</h3>
+          <h3 v-if="data.diceVal > 0">Initiative: {{ data.diceVal }}</h3>
+          <button
+            class="btn success"
+            @click="diceGenerator(data.modifier, data.id)"
+          >
+            Roll the Dice
+          </button>
+          <button class="btn warning" @click="removePlayer(data.id)">
+            Delete Player
+          </button>
+        </li>
+      </div>
     </ol>
   </div>
 </template>
@@ -84,4 +91,50 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style scoped>
+* {
+  box-sizing: border-box;
+}
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: auto;
+  margin-top: 10px;
+  padding: 16px;
+  width: 30vh;
+  text-align: center;
+  background-color: #f1f1f1;
+}
+.card-form {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: auto;
+  margin-top: 10px;
+  padding: 16px;
+  width: 35vh;
+  text-align: center;
+  background-color: #f1f1f1;
+}
+.warning {
+  background-color: #ff9800;
+  font-weight: bold;
+  color: #f1f1f1;
+} /* Orange */
+.warning:hover {
+  background: #e68a00;
+}
+.success {
+  font-weight: bold;
+  background-color: #04aa6d;
+  color: #f1f1f1;
+} /* Green */
+.success:hover {
+  background-color: #46a049;
+}
+.danger {
+  font-weight: bold;
+  background-color: #f44336;
+  color: #f1f1f1;
+} /* Red */
+.danger:hover {
+  background: #ff1100;
+}
+</style>
