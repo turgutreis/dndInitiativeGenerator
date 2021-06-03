@@ -60,6 +60,9 @@ export default {
         modifier: iniModifier.value,
         diceVal: 0,
       });
+      const parsed = JSON.stringify(players.value);
+      localStorage.setItem("player", parsed);
+      console.log(players.value);
       playerName.value = "";
       iniModifier.value = "";
     }
@@ -74,6 +77,8 @@ export default {
           resp.diceVal = result + parseInt(modifier);
         }
       });
+      const parsed = JSON.stringify(players.value);
+      localStorage.setItem("player", parsed);
       // console.log(todos.value.sort((a, b) => a - b));
     }
     function rollAllDices() {
@@ -82,14 +87,16 @@ export default {
         result = Math.floor(Math.random() * 20) + 1;
         players.value[i].diceVal = result + parseInt(players.value[i].modifier);
       }
-      savePlayer();
+      const parsed = JSON.stringify(players.value);
+      localStorage.setItem("player", parsed);
     }
     function removePlayer(val) {
       const index = players.value.map((item) => item.id).indexOf(val);
+      const value = JSON.parse(localStorage.getItem("player"));
       players.value.splice(index, 1);
-    }
-    function savePlayer() {
-      const parsed = JSON.stringify(players.value);
+      console.log(players.value);
+      value.splice(index, 1);
+      const parsed = JSON.stringify(value);
       localStorage.setItem("player", parsed);
     }
 
