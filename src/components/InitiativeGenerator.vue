@@ -7,6 +7,8 @@
         <input v-model="playerName" name="playerName" />
         <label>Ini Modifer</label>
         <input v-model="iniModifier" name="iniModifier" />
+        <input type="radio" id="advantage" name="status" value="advantage" />
+        <label for="advantage">Advantage</label><br />
         <button class="btn success">Add New Player</button>
       </form>
       <button class="btn success" @click="rollAllDices">Roll all dices</button>
@@ -36,7 +38,16 @@
 <script>
 import { ref } from "vue";
 export default {
-  name: "HelloWorld",
+  name: "InitiativeGenerator",
+  mounted() {
+    if (localStorage.getItem("player")) {
+      try {
+        this.players = JSON.parse(localStorage.getItem("player"));
+      } catch (e) {
+        localStorage.removeItem("player");
+      }
+    }
+  },
   setup() {
     const playerName = ref("");
     const iniModifier = ref("");
@@ -71,11 +82,17 @@ export default {
         result = Math.floor(Math.random() * 20) + 1;
         players.value[i].diceVal = result + parseInt(players.value[i].modifier);
       }
+      savePlayer();
     }
     function removePlayer(val) {
       const index = players.value.map((item) => item.id).indexOf(val);
       players.value.splice(index, 1);
     }
+    function savePlayer() {
+      const parsed = JSON.stringify(players.value);
+      localStorage.setItem("player", parsed);
+    }
+
     return {
       players,
       playerName,

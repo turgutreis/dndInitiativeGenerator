@@ -1,18 +1,18 @@
 <template>
   <div class="home">
     <img class="logo" alt="Vue logo" src="../assets/d&d.png" />
-    <HelloWorld />
+    <InitiativeGenerator />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import InitiativeGenerator from "@/components/InitiativeGenerator.vue";
 
 export default {
   name: "Home",
   components: {
-    HelloWorld,
+    InitiativeGenerator,
   },
 };
 </script>
