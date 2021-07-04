@@ -68,6 +68,10 @@ export default {
     }
     function sortPlayers() {
       players.value.sort((a, b) => b.diceVal - a.diceVal);
+      const value = JSON.parse(localStorage.getItem("player"));
+      var newVal = value.sort((a, b) => b.diceVal - a.diceVal);
+      const parsed = JSON.stringify(newVal);
+      localStorage.setItem("player", parsed);
     }
     function diceGenerator(modifier, id) {
       var result = Math.floor(Math.random() * 20) + 1;
