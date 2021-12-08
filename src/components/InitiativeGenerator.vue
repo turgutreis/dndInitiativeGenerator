@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="card-form">
-      <h3>Vue 3 Initiative Generator D&D 5</h3>
       <form @submit.prevent="addNewPlayer">
         <label>Name</label>
         <input v-model="playerName" name="playerName" />
@@ -37,6 +36,7 @@
 
 <script>
 import { ref } from "vue";
+import { nanoid } from "nanoid";
 export default {
   name: "InitiativeGenerator",
   mounted() {
@@ -51,11 +51,11 @@ export default {
   setup() {
     const playerName = ref("");
     const iniModifier = ref("");
-    const playerId = ref("1");
+    // const playerId = ref("1");
     const players = ref([]);
     function addNewPlayer() {
       players.value.push({
-        id: playerId.value++,
+        id: nanoid(6),
         playername: playerName.value,
         modifier: iniModifier.value,
         diceVal: 0,

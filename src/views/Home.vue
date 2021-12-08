@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <img class="logo" alt="Vue logo" src="../assets/d&d.png" />
     <InitiativeGenerator />
   </div>
 </template>
