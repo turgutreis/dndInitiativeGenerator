@@ -10,6 +10,13 @@
         <label for="advantage">Advantage</label><br />
         <button class="btn success">Add New Player</button>
       </form>
+      <form action="" @submit.prevent="addNumberOfEnemies">
+        <label>Name</label>
+        <input v-model="enemiesName" name="enemiesName" />
+        <label>number of Enemies</label>
+        <input v-model="enemiesNumber" name="enemiesNumber" />
+        <button class="btn success">Add Enemies</button>
+      </form>
       <button class="btn success" @click="rollAllDices">Roll all dices</button>
       <button class="btn danger" @click="sortPlayers">SORT</button>
     </div>
@@ -50,9 +57,12 @@ export default {
   },
   setup() {
     const playerName = ref("");
+    const enemiesName = ref("");
+    const enemiesNumber = ref("");
     const iniModifier = ref("");
     // const playerId = ref("1");
     const players = ref([]);
+    const enemies = ref([]);
     function addNewPlayer() {
       players.value.push({
         id: nanoid(6),
@@ -65,6 +75,17 @@ export default {
       console.log(players.value);
       playerName.value = "";
       iniModifier.value = "";
+    }
+    function addNumberOfEnemies() {
+      for (let i = 0; i < enemiesNumber.value; i++) {
+        enemies.value.push({
+          id: nanoid(6),
+          enemiesName: enemiesName.value,
+          modifier: iniModifier.value,
+          diceVal: 0,
+        });
+      }
+      console.log(enemies.value);
     }
     function sortPlayers() {
       players.value.sort((a, b) => b.diceVal - a.diceVal);
@@ -106,13 +127,17 @@ export default {
 
     return {
       players,
+      enemies,
       playerName,
+      enemiesName,
       iniModifier,
       addNewPlayer,
+      enemiesNumber,
       diceGenerator,
       rollAllDices,
       sortPlayers,
       removePlayer,
+      addNumberOfEnemies,
     };
   },
 };
