@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start": "vue-cli-service serve --open"
   },
   "dependencies": {
     "@handsontable/vue3": "^11.1.0",
@@ -14,6 +15,7 @@
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
     "handsontable": "^11.1.0",
+    "mdb-vue-ui-kit": "^1.9.0",
     "nanoid": "^3.1.30",
     "vue": "^3.0.11",
     "vue-router": "^4.0.0-0"
@@ -29,7 +31,8 @@
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.0.0",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "vue-cli-plugin-mdb5": "~1.2.0"
   },
   "eslintConfig": {
     "root": true,

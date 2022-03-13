@@ -2,23 +2,27 @@
   <div>
     <div class="card-form">
       <form @submit.prevent="addNewPlayer">
-        <label>Name</label>
+        <label>Playername</label>
         <input v-model="playerName" name="playerName" />
         <label>Ini Modifer</label>
         <input v-model="iniModifier" name="iniModifier" />
-        <input type="radio" id="advantage" name="status" value="advantage" />
-        <label for="advantage">Advantage</label><br />
-        <button class="btn success">Add New Player</button>
+        <!-- <input type="radio" id="advantage" name="status" value="advantage" /> -->
+        <!-- <label for="advantage">Advantage</label><br /> -->
+        <button class="btn success mt-2">Add New Player</button>
       </form>
       <form action="" @submit.prevent="addNumberOfEnemies">
-        <label>Name</label>
+        <label>Enemy Name</label>
         <input v-model="enemiesName" name="enemiesName" />
+        <label>Ini Modifer</label>
+        <input v-model="iniModifierEnemies" name="iniModifierEnemies" />
         <label>number of Enemies</label>
         <input v-model="enemiesNumber" name="enemiesNumber" />
-        <button class="btn success">Add Enemies</button>
+        <button class="btn success mt-2">Add Enemies</button>
       </form>
-      <button class="btn success" @click="rollAllDices">Roll all dices</button>
-      <button class="btn danger" @click="sortPlayers">SORT</button>
+      <button class="btn success mt-2" @click="rollAllDices">
+        Roll all dices
+      </button>
+      <button class="btn danger mt-2" @click="sortPlayers">SORT</button>
     </div>
     <ol>
       <div class="card" v-for="data in players" :key="data.id">
@@ -50,6 +54,7 @@ export default {
     if (localStorage.getItem("player")) {
       try {
         this.players = JSON.parse(localStorage.getItem("player"));
+        this.enemies = JSON.parse(localStorage.getItem("enemies"));
       } catch (e) {
         localStorage.removeItem("player");
       }
@@ -60,9 +65,10 @@ export default {
     const enemiesName = ref("");
     const enemiesNumber = ref("");
     const iniModifier = ref("");
-    // const playerId = ref("1");
+    const iniModifierEnemies = ref("");
     const players = ref([]);
     const enemies = ref([]);
+    const playersAndEnemies = ref([]);
     function addNewPlayer() {
       players.value.push({
         id: nanoid(6),
@@ -78,14 +84,18 @@ export default {
     }
     function addNumberOfEnemies() {
       for (let i = 0; i < enemiesNumber.value; i++) {
-        enemies.value.push({
+        players.value.push({
           id: nanoid(6),
-          enemiesName: enemiesName.value,
-          modifier: iniModifier.value,
+          playername: enemiesName.value + " " + i,
+          modifier: iniModifierEnemies.value,
           diceVal: 0,
         });
       }
-      console.log(enemies.value);
+      const parsed = JSON.stringify(players.value);
+      localStorage.setItem("player", parsed);
+      console.log(players.value);
+      playerName.value = "";
+      iniModifier.value = "";
     }
     function sortPlayers() {
       players.value.sort((a, b) => b.diceVal - a.diceVal);
@@ -104,7 +114,6 @@ export default {
       });
       const parsed = JSON.stringify(players.value);
       localStorage.setItem("player", parsed);
-      // console.log(todos.value.sort((a, b) => a - b));
     }
     function rollAllDices() {
       var result = 0;
@@ -117,23 +126,22 @@ export default {
     }
     function removePlayer(val) {
       const index = players.value.map((item) => item.id).indexOf(val);
-      const value = JSON.parse(localStorage.getItem("player"));
       players.value.splice(index, 1);
-      console.log(players.value);
-      value.splice(index, 1);
-      const parsed = JSON.stringify(value);
+      const parsed = JSON.stringify(players.value);
       localStorage.setItem("player", parsed);
     }
 
     return {
       players,
       enemies,
+      playersAndEnemies,
       playerName,
       enemiesName,
       iniModifier,
       addNewPlayer,
       enemiesNumber,
       diceGenerator,
+      iniModifierEnemies,
       rollAllDices,
       sortPlayers,
       removePlayer,
@@ -162,7 +170,7 @@ export default {
   margin: auto;
   margin-top: 10px;
   padding: 16px;
-  width: 35vh;
+  width: 235px;
   text-align: center;
   background-color: #f1f1f1;
 }
